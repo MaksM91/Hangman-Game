@@ -1,36 +1,50 @@
-let string = "Kto i co"
-let string1 = "" 
-const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+let loss = 0;
 
-// Function that hide password behind dashes
-
-function loadPassword(){
-    for(i=0; i < string.length; i++){
-        if (string[i] === " "){
-        string1 = string1 + " "
-        } else{
-        string1 = string1 + "_"
-        }
+function handleButton(){
+    if (string.toUpperCase().includes(this.innerHTML)){
+        correctButton(this);
+    } else {
+        incorrectButton(this);
     }
+};
 
-    document.getElementById('password').innerHTML = string1
+function correctButton(element){
+    element.style.backgroundColor = "green";
+    new Audio('./sound/yes.wav').play();
+    element.disabled = true
+    handlePassword()
+};
+
+function incorrectButton(element){
+    element.style.backgroundColor = "red"
+    new Audio('./sound/no.wav').play();
+    element.disabled = true
+    loss += 1
+    if (loss > 9){
+        restartMenu();
+    }
+    handlePicture(loss);
+};
+
+function handlePicture(loss){
+    document.getElementById('picture').src = `./img/s${loss}.jpg`;
+};
+
+function handlePassword(){
+    
+};
+
+function restartMenu(){
+
 };
 
 
+document.querySelectorAll('.boxes').forEach(button => button.addEventListener('click', handleButton));
 
-// Function that creates buttons
 
-document.addEventListener('DOMContentLoaded', () => {
-    for(i=0; i < 26; i++){
-        var button = document.createElement('button');
-        button.innerHTML = 'Hi'
-        button.className = 'boxes'
-        button.innerHTML = alphabet[i]
-        document.getElementById('letters').appendChild(button);
-    }
-})
 
-document.addEventListener('DOMContentLoaded', loadPassword())
+
+
 
 
 
