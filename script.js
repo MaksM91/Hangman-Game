@@ -11,8 +11,12 @@ function handleButton(){
 function correctButton(element){
     element.style.backgroundColor = "green";
     new Audio('./sound/yes.wav').play();
-    element.disabled = true
-    handlePassword()
+    element.disabled = true;
+    handlePassword(element);
+    document.getElementById('password').innerHTML = string1;
+    if (string1 === string){
+        winMenu();
+    }
 };
 
 function incorrectButton(element){
@@ -20,22 +24,31 @@ function incorrectButton(element){
     new Audio('./sound/no.wav').play();
     element.disabled = true
     loss += 1
-    if (loss > 9){
-        restartMenu();
-    }
     handlePicture(loss);
+    if (loss >= 9){
+        lossMenu();
+    }
 };
 
 function handlePicture(loss){
     document.getElementById('picture').src = `./img/s${loss}.jpg`;
 };
 
-function handlePassword(){
-    
+function handlePassword(element){
+    for (let i=0; i<string.length; i++){
+        if(element.innerHTML === string.toUpperCase()[i]){
+            string1 = string1.substr(0,i) + string[i] + string1.substr(i+1);
+        };
+    };
 };
 
-function restartMenu(){
+function winMenu(){
+    document.getElementById('letters').innerHTML = 'WIN!'
 
+};
+
+function lossMenu(){
+    document.getElementById('letters').innerHTML = 'LOST!'
 };
 
 
